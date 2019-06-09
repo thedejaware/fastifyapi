@@ -1,0 +1,19 @@
+{
+  "name": "fastify-api",
+  "version": "1.0.0",
+  "description": "Fast REST APIs using Node.js, Fastify, Swagger and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/nodemon/bin/nodemon.js ./src/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^7.3.0",
+    "fastify": "^2.4.1",
+    "fastify-swagger": "^2.4.0",
+    "mongoose": "^5.5.14",
+    "nodemon": "^1.19.1"
+  }
+}
