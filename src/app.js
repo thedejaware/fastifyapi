@@ -5,8 +5,15 @@ const fastify = require('fastify')({
 
 // Rquire routes
 const routes = require('./routes/cars.route');
+
 // Require mongoose
 const mongoose = require('mongoose');
+
+// Import Swagger Options
+const swagger = require('./config/swagger');
+
+// Register swagger
+fastify.register(require('fastify-swagger'), swagger.options);
 
 // Connecting to DB
 mongoose.connect('mongodb://localhost/mycargarage')
@@ -27,6 +34,8 @@ fastify.get('/', async (request, response) => {
 const start = async () => {
     try {
         await fastify.listen(3001);
+        // Initialize swagger
+        fastify.swagger(); // http://localhost:3001/documentation API Documentation
         fastify.log.info(`Server listening on ${fastify.server.address().port}`);
     } catch (err) {
         fastify.log.error(err);
