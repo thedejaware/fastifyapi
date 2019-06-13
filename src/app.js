@@ -1,24 +1,15 @@
-// Fastify framework
-const fastify = require('fastify')({
-    logger: true
-})
+// Import Server
+const fastify = require('./server.js');
 
 // Rquire routes
-const routes = require('./routes/cars.route');
+const routes = require('./routes');
 
-// Require mongoose
-const mongoose = require('mongoose');
 
 // Import Swagger Options
 const swagger = require('./config/swagger');
 
 // Register swagger
 fastify.register(require('fastify-swagger'), swagger.options);
-
-// Connecting to DB
-mongoose.connect('mongodb://localhost/mycargarage')
-.then(() => console.log('MongoDB connected...'))
-.catch(err => console.log(err));
 
 
 // Looping over all routes
@@ -33,7 +24,7 @@ fastify.get('/', async (request, response) => {
 // Starting the server
 const start = async () => {
     try {
-        await fastify.listen(3001);
+        await fastify.listen(3001, '0.0.0.0');
         // Initialize swagger
         fastify.swagger(); // http://localhost:3001/documentation API Documentation
         fastify.log.info(`Server listening on ${fastify.server.address().port}`);

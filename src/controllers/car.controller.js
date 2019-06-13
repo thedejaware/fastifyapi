@@ -15,9 +15,9 @@ exports.getCars = async (req, res) => {
 };
 
 // Get single car by ID
-exports.getSingleCar = async (req, res) => {
+exports.getSingleCar = async req  => {
   try {
-    const id = req.params.id;
+    const id = req.params.id === undefined ? req.id : req.params.id;
     const singleCar = await Car.findById(id);
     return singleCar;
   } catch (err) {
@@ -26,24 +26,24 @@ exports.getSingleCar = async (req, res) => {
 };
 
 // Adding a car
-exports.addCar = async (req, res) => {
+exports.addCar = async req => {
   try {
-    const newCar = new Car(req.body);
-    return await newCar.save();
+    const car = new Car(req);
+    const newCar = await car.save();
+    return newCar;
   } catch (err) {
     throw boom.boomify(err);
   }
 };
 
 // Updating an existing car
-exports.updateCar = async (req, res) => {
+exports.updateCar = async req => {
   try {
-    const id = req.params.id;
-    const car = req.body;
-    const { ...updateData } = car;
-    const updatedCar = await Car.findByIdAndUpdate(id, updateData, {
+    const id = req.params === undefined ? req.id : req.params.id;
+    const updatedData = req.params === undefined ? req : req.params;
+    const updatedCar = await Car.findByIdAndUpdate(id, updatedData, {
       new: true
-    });
+    });    
     return updatedCar;
   } catch (err) {
     throw boom.boomify(err);
@@ -51,9 +51,9 @@ exports.updateCar = async (req, res) => {
 };
 
 // Delete a car
-exports.deleteCar = async (req, res) => {
+exports.deleteCar = async req => {
     try {
-        const id = req.params.id;
+        const id = req.params === undefined ? req.id : req.params.id;
         const car = await Car.findByIdAndRemove(id);
         return car;
     } catch (err) {
