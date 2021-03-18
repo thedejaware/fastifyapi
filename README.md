@@ -1,0 +1,2 @@
+# fastifyapi
+GraphQL Application
