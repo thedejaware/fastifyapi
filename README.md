@@ -1,2 +1,2 @@
-# fastifyapi
-GraphQL Application
+# Implementing GraphQL using Fastify Web Framework
+
